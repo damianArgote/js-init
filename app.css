@@ -1,0 +1,12 @@
+body{
+    background-color: #e2e2e2;
+}
+
+ul{
+    list-style: none;
+
+}
+
+ul span{
+    color: red;
+}
