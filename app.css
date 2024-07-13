@@ -1,12 +1,53 @@
-body{
-    background-color: #e2e2e2;
+body {
+  background-color: #e2e2e2;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
 }
 
-ul{
-    list-style: none;
-
+#contenedor {
+  border: 1px solid #000;
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  max-width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative; /* Añadimos position: relative para posicionar elementos hijos absolutamente */
 }
 
-ul span{
-    color: red;
+#producto-imagen {
+  position: absolute; /* Posicionamos la imagen absolutamente */
+  top: 20px; /* Ajustamos la posición superior */
+  right: 20px; /* Ajustamos la posición derecha */
+  max-width: 210px; /* Ajustamos el tamaño de la imagen */
+  border-radius: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  text-align: left; /* Centramos el contenido */
+}
+
+ul span {
+  color: red;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+#listado p {
+  font-weight: bold;
+  margin: 0;
+  color: black; /* Ponemos el color del texto en negro */
+}
+
+#listado ul {
+  padding-left: 0; /* Eliminamos el padding */
+  text-align: center; /* Centramos el contenido */
+}
+
+#listado ul li {
+  color: red; /* Ponemos el color del texto en negro */
 }

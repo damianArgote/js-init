@@ -1,64 +1,67 @@
-
-//objetos key(llave) : value (valor)
 const producto = {
+    categorias: ['Usado', 'Notebook', 'Lenovo', 'Garantia'],
+    descripcion: 'Lenovo Usado con garantia',
     nombre: 'notebook',
-    id: 1,
-    descripcion: 'Lenovo usado con garantia',
-    precio: 2500000,
+    precio: 250000,
     disponible: true,
-    categorias: ['Usado', 'Notebook', 'Garantia'],
+    id: 1,
     informacion: {
         marca: 'Lenovo',
         pais: 'Argentina',
-        numeroSerie: 12345678
+        numeroSerie: '12345678',
     }
+};
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-//console.log(producto['nombre']);
-
-/* for(let key in producto){
-    //cuando producto este disponible
-    if(producto.disponible){
-        console.log(producto[key]);
-    }else{
-        console.log('No disponible');
+function capitalizeObjectKeys(obj) {
+    const capitalizedObj = {};
+    for (let key in obj) {
+        let value = obj[key];
+        if (typeof value === 'object' && !Array.isArray(value)) {
+            value = capitalizeObjectKeys(value);
+        } else if (typeof value === 'string') {
+            value = capitalizeFirstLetter(value);
+        }
+        capitalizedObj[capitalizeFirstLetter(key)] = value;
     }
-    //ternario
-    producto.disponible ? console.log(producto[key]) :  console.log('No disponible')
+    return capitalizedObj;
+}
 
-    producto.disponible && console.log(producto[key]);
-
-    producto.disponible = producto.disponible ?? console.log('No disponible')
-} */
-
+const productoCapitalized = capitalizeObjectKeys(producto);
 
 const listadoUl = document.querySelector('#listado');
 
 function imprimirObjeto() {
+    for (let key in productoCapitalized) {
+        const li = document.createElement('li'); // Creamos el elemento li
 
-    for (let key in producto) {
-        const li = document.createElement('li');//creamos el elemento li
+        // Validar por el key informacion
+        if (key === 'Informacion') {
+            const div = document.createElement('div');
+            div.innerHTML = `<p>Información:</p>`;
+            const ul = document.createElement('ul');
 
-        //validar por el key informacion
-        if (key === 'informacion') {
-            //Se vuelve a interar el objeto producto.informacion
-            for (let llave in producto.informacion) {
-                const div = document.createElement('div');
-                div.innerHTML = `<ul>
-                    <li>${producto.informacion[llave]}</li>
-                </ul>`
-
-                li.appendChild(div);
+            // Se vuelve a iterar el objeto productoCapitalized.Informacion
+            for (let llave in productoCapitalized.Informacion) {
+                const liInfo = document.createElement('li');
+                liInfo.textContent = `${llave}: ${productoCapitalized.Informacion[llave]}`;
+                ul.appendChild(liInfo);
             }
 
+            div.appendChild(ul);
+            li.appendChild(div);
+
         } else {
-            li.innerHTML = `<strong>${key}</strong>: <span>${producto[key]}</span>`; //le damo el valor al elemento
+            li.innerHTML = `<strong>${key}</strong>: <span>${productoCapitalized[key]}</span>`; // Le damos el valor al elemento
         }
-        listadoUl.appendChild(li); //unimos el elemento al padre ul
+        listadoUl.appendChild(li); // Unimos el elemento al padre ul
     }
 }
 
-imprimirObjeto()
+imprimirObjeto();
 
 console.log('hola soy pablo');
 console.log('hola soy damian');
