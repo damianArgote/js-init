@@ -61,3 +61,4 @@ function imprimirObjeto() {
 imprimirObjeto()
 
 console.log('hola soy pablo');
+console.log('hola soy damian');
