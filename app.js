@@ -9,7 +9,8 @@ const producto = {
         marca: 'Lenovo',
         pais: 'Argentina',
         numeroSerie: '12345678',
-    }
+    },
+    imagen: 'https://previsoraarg.vtexassets.com/arquivos/ids/158535-800-auto?v=638216540368500000&width=800&height=auto&aspect=true'
 };
 
 function capitalizeFirstLetter(string) {
@@ -30,11 +31,19 @@ function capitalizeObjectKeys(obj) {
     return capitalizedObj;
 }
 
+function formatCurrency(number) {
+    return '$' + number.toLocaleString('es-AR'); // Formato de Argentina
+}
+
 const productoCapitalized = capitalizeObjectKeys(producto);
 
 const listadoUl = document.querySelector('#listado');
 
 function imprimirObjeto() {
+    // Asignar la imagen al elemento img
+    const productoImagen = document.querySelector('#producto-imagen');
+    productoImagen.src = productoCapitalized.Imagen;
+
     for (let key in productoCapitalized) {
         const li = document.createElement('li'); // Creamos el elemento li
 
@@ -54,7 +63,13 @@ function imprimirObjeto() {
             div.appendChild(ul);
             li.appendChild(div);
 
-        } else {
+        } else if (key === 'Disponible') {
+            const disponibilidad = productoCapitalized[key] ? 'SI' : 'NO';
+            const color = productoCapitalized[key] ? 'green' : 'red';
+            li.innerHTML = `<strong>${key}</strong>: <span style="color:${color}">${disponibilidad}</span>`;
+        } else if (key === 'Precio') {
+            li.innerHTML = `<strong>${key}</strong>: <span class="precio">${formatCurrency(productoCapitalized[key])}</span>`;
+        } else if (key !== 'Imagen') { // Excluir la propiedad Imagen
             li.innerHTML = `<strong>${key}</strong>: <span>${productoCapitalized[key]}</span>`; // Le damos el valor al elemento
         }
         listadoUl.appendChild(li); // Unimos el elemento al padre ul
@@ -62,6 +77,3 @@ function imprimirObjeto() {
 }
 
 imprimirObjeto();
-
-console.log('hola soy pablo');
-console.log('hola soy damian');
