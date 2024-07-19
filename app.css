@@ -1,59 +1,54 @@
 body {
-  background-color: #e2e2e2;
+  background-color: #f8f9fa;
   font-family: Arial, sans-serif;
-  font-weight: bold;
 }
 
-#contenedor {
-  border: 1px solid #000;
-  background-color: #fff;
-  padding: 20px;
-  margin: 20px auto;
+#producto-card {
+  border: none;
   border-radius: 10px;
-  max-width: 600px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: relative; /* Añadimos position: relative para posicionar elementos hijos absolutamente */
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 16rem; /* Ajusta el ancho de la tarjeta */
 }
 
 #producto-imagen {
-  position: absolute; /* Posicionamos la imagen absolutamente */
-  top: 20px; /* Ajustamos la posición superior */
-  right: 20px; /* Ajustamos la posición derecha */
-  max-width: 210px; /* Ajustamos el tamaño de la imagen */
-  border-radius: 20px;
+  object-fit: cover;
+  height: 280px; /* Ajusta la altura de la imagen */
 }
 
-ul {
-  list-style: none;
+.card-body {
+  background-color: #ffffff;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: #007bff;
+}
+
+.card-text {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.list-unstyled {
   padding: 0;
-  text-align: left; /* Centramos el contenido */
 }
 
-ul span {
-  color: red;
+.list-unstyled li {
+  margin-bottom: 5px;
+  font-size: 0.875rem;
 }
 
-ul li {
-  margin-bottom: 10px;
-}
-
-#listado p {
-  font-weight: bold;
-  margin: 0;
-  color: black; /* Ponemos el color del texto en negro */
-}
-
-#listado ul {
-  padding-left: 0; /* Eliminamos el padding */
-  text-align: center; /* Centramos el contenido */
-}
-
-#listado ul li {
-  color: red; /* Ponemos el color del texto en negro */
-}
-
-/* Estilo para el precio */
 .precio {
-  font-size: 1.5em;
+  font-size: 1.25rem;
   font-weight: bold;
+  color: #28a745;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.text-danger {
+  color: #dc3545;
 }

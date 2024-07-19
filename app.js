@@ -17,62 +17,57 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function capitalizeObjectKeys(obj) {
-    const capitalizedObj = {};
-    for (let key in obj) {
-        let value = obj[key];
-        if (typeof value === 'object' && !Array.isArray(value)) {
-            value = capitalizeObjectKeys(value);
-        } else if (typeof value === 'string') {
-            value = capitalizeFirstLetter(value);
-        }
-        capitalizedObj[capitalizeFirstLetter(key)] = value;
-    }
-    return capitalizedObj;
-}
-
 function formatCurrency(number) {
     return '$' + number.toLocaleString('es-AR'); // Formato de Argentina
 }
 
-const productoCapitalized = capitalizeObjectKeys(producto);
-
-const listadoUl = document.querySelector('#listado');
-
 function imprimirObjeto() {
     // Asignar la imagen al elemento img
     const productoImagen = document.querySelector('#producto-imagen');
-    productoImagen.src = productoCapitalized.Imagen;
+    productoImagen.src = producto.imagen;
 
-    for (let key in productoCapitalized) {
-        const li = document.createElement('li'); // Creamos el elemento li
+    // Asignar nombre y descripción
+    const productoNombre = document.querySelector('#producto-nombre');
+    productoNombre.textContent = capitalizeFirstLetter(producto.nombre);
 
-        // Validar por el key informacion
-        if (key === 'Informacion') {
-            const div = document.createElement('div');
-            div.innerHTML = `<p>Información:</p>`;
-            const ul = document.createElement('ul');
+    const productoDescripcion = document.querySelector('#producto-descripcion');
+    productoDescripcion.textContent = capitalizeFirstLetter(producto.descripcion);
 
-            // Se vuelve a iterar el objeto productoCapitalized.Informacion
-            for (let llave in productoCapitalized.Informacion) {
-                const liInfo = document.createElement('li');
-                liInfo.textContent = `${llave}: ${productoCapitalized.Informacion[llave]}`;
-                ul.appendChild(liInfo);
+    // Crear listado de detalles
+    const listadoUl = document.querySelector('#listado');
+    listadoUl.innerHTML = '';
+
+    for (let key in producto) {
+        if (key !== 'id' && key !== 'nombre' && key !== 'descripcion' && key !== 'imagen') {
+            const li = document.createElement('li');
+
+            if (key === 'informacion') {
+                li.innerHTML = `<strong>Información:</strong>`;
+                const ul = document.createElement('ul');
+                ul.classList.add('list-unstyled');
+
+                for (let llave in producto[key]) {
+                    const liInfo = document.createElement('li');
+                    liInfo.textContent = `${capitalizeFirstLetter(llave)}: ${producto[key][llave]}`;
+                    ul.appendChild(liInfo);
+                }
+
+                li.appendChild(ul);
+
+            } else if (key === 'disponible') {
+                const disponibilidad = producto[key] ? 'Sí' : 'No';
+                const color = producto[key] ? 'text-success' : 'text-danger';
+                li.innerHTML = `<strong>${capitalizeFirstLetter(key)}:</strong> <span class="${color}">${disponibilidad}</span>`;
+
+            } else if (key === 'precio') {
+                li.innerHTML = `<strong>${capitalizeFirstLetter(key)}:</strong> <span class="precio">${formatCurrency(producto[key])}</span>`;
+
+            } else {
+                li.innerHTML = `<strong>${capitalizeFirstLetter(key)}:</strong> ${producto[key]}`;
             }
 
-            div.appendChild(ul);
-            li.appendChild(div);
-
-        } else if (key === 'Disponible') {
-            const disponibilidad = productoCapitalized[key] ? 'SI' : 'NO';
-            const color = productoCapitalized[key] ? 'green' : 'red';
-            li.innerHTML = `<strong>${key}</strong>: <span style="color:${color}">${disponibilidad}</span>`;
-        } else if (key === 'Precio') {
-            li.innerHTML = `<strong>${key}</strong>: <span class="precio">${formatCurrency(productoCapitalized[key])}</span>`;
-        } else if (key !== 'Imagen') { // Excluir la propiedad Imagen
-            li.innerHTML = `<strong>${key}</strong>: <span>${productoCapitalized[key]}</span>`; // Le damos el valor al elemento
+            listadoUl.appendChild(li);
         }
-        listadoUl.appendChild(li); // Unimos el elemento al padre ul
     }
 }
 

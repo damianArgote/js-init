@@ -4,13 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información del Producto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
-    <div id="contenedor">
-        <img id="producto-imagen" src="" alt="Imagen del producto">
-        <ul id="listado"></ul>
+    <div class="container my-5 d-flex justify-content-center">
+        <div class="card" id="producto-card" style="width: 18rem;">
+            <img id="producto-imagen" class="card-img-top" src="" alt="Imagen del producto">
+            <div class="card-body">
+                <h5 id="producto-nombre" class="card-title"></h5>
+                <p id="producto-descripcion" class="card-text"></p>
+                <ul id="listado" class="list-unstyled"></ul>
+            </div>
+        </div>
     </div>
     <script src="app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
