@@ -16,7 +16,7 @@ const tecnologias =[
         framework:'Angular',
         stack:'Frontend',
         logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/1200px-Angular_full_color_logo.svg.png',
-        id:2
+        id:2,
     },
     {
         framework:'Nodejs',
@@ -99,8 +99,42 @@ let resultado;
 
 resultado = tecnologias2.reduce((total,tecnologia) =>  total - tecnologia.precio,0);
 
-console.log('total',resultado);
+//console.log('total',resultado);
 
+const divContenedor = document.getElementById('contenedor');
 
+//cargarHTML(tecnologias);
+filtro('Backend')
+function cargarHTML(array){
+    limpiarHtml();
+    array.map(item =>{
+        const div = document.createElement('div');
+        div.classList.add('col-3', 'text-light', 'rounded');
+        div.innerHTML=`
+        <div class="card border border-success">
+        <img src="${item.logo}" class="card-img-top" alt="${item.framework}">
+        <div class="card-body">
+          <h5 class="card-title">${item.framework}</h5>
+          <p class="card-text">${item.stack}</p>
+        </div>
+      </div>
+        `;
+        divContenedor.appendChild(div);
+    })
+}
 
+//filtro
+function filtro(stack){
+    cargarHTML(tecnologias.filter(item => item.stack === stack));
+}
 
+function limpiarHtml(){
+    while(divContenedor.firstChild){
+        divContenedor.removeChild(divContenedor.firstChild)
+    }
+}
+
+//una funcion para agregar una descripcion a cada tecnologia
+function agregarDescripcion(id,descripcion){
+
+}
