@@ -56,4 +56,51 @@ const tecnologias =[
     }
 ]
 
-console.log(tecnologias);
+const tecnologias2 = [
+    {
+        framework:'React',
+        stack:'Frontend',
+        logo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMbJS-A8NEllfqbKf-4GUKetJe8J3GKqKP6A&s',
+        id:1,
+        precio:20000
+    },
+    {
+        framework:'Angular',
+        stack:'Frontend',
+        logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/1200px-Angular_full_color_logo.svg.png',
+        id:2,
+        precio:30000
+    },
+]
+
+//console.log(tecnologias);
+
+//foreach
+/* let resultado = tecnologias.forEach((tecnologia) =>{
+    console.log(tecnologia);
+});
+
+console.log(resultado); */
+
+let frontend = tecnologias.map((tecnologia) =>{
+    if(tecnologia.stack === 'Frontend'){
+        return tecnologia;
+    }
+    return;
+});
+
+let resultado;
+
+//resultado = tecnologias.some( tecnologia => tecnologia.framework === 'MySQL')
+//resultado = tecnologias.find( tecnologia => tecnologia.framework === 'MySQL')
+
+//resultado = tecnologias2.every( tecnologia => tecnologia.stack === 'Frontend')
+//resultado = tecnologias.filter( tecnologia => tecnologia.id !== 3)
+
+resultado = tecnologias2.reduce((total,tecnologia) =>  total - tecnologia.precio,0);
+
+console.log('total',resultado);
+
+
+
+
