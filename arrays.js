@@ -118,11 +118,11 @@ function cargarHTML(array) {
     limpiarHtml();
     array.map(item => {
         const div = document.createElement('div');
-        div.classList.add('col-3', 'text-light', 'rounded');
+        div.classList.add('col-6', 'col-sm-6', 'col-md-4', 'col-lg-3', 'text-light', 'rounded', 'd-flex', 'p-1', 'img-fluid');
         div.innerHTML = `
-        <div class="card border border-success">
-        <img src="${item.logo}" class="card-img-top" alt="${item.framework}">
-        <div class="card-body">
+        <div class="card border border-success h-10 p-5 text-center img-fluid ">
+        <img src="${item.logo}" class="card-img-top img-thumbnail img-fluid border-5" alt="${item.framework}">
+        <div class="card-body d-flex flex-column">
           <h5 class="card-title">${item.framework}</h5>
           <p class="card-text">${item.stack}</p>
         </div>
