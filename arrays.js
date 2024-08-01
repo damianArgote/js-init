@@ -123,14 +123,16 @@ function cargarHTML(array) {
         <div class="card border border-success h-10 p-5 text-center img-fluid ">
         <img src="${item.logo}" class="card-img-top img-thumbnail img-fluid border-5" alt="${item.framework}">
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title">${item.framework}</h5>
-          <p class="card-text">${item.stack}</p>
+          <h5 class="card-title text-decoration-underline">${item.framework}</h5>
+          <p class="card-text text-bg-warning">${item.stack}</p>
+          <p class="card-text text-start ">${item.description}</p>
         </div>
       </div>
         `;
         divContenedor.appendChild(div);
     })
 }
+
 
 //filtro
 function filtro(stack) {
@@ -151,8 +153,21 @@ function limpiarHtml() {
 }
 
 //una funcion para agregar una descripcion a cada tecnologia
-/* function agregarDescripcion(id, descripcion) {
-
+function agregarDescripcion(id, descripcion) {
+    const tecnologia = tecnologias.find(item => item.id === id);
+    if (tecnologia) {
+        tecnologia.description = descripcion;
+    }
 }
+agregarDescripcion(1, 'React es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario.');
+agregarDescripcion(2, 'Angular es un framework para aplicaciones web desarrollado en TypeScript');
+agregarDescripcion(3, 'Node.js es un entorno en tiempo de ejecución multiplataforma');
+agregarDescripcion(4, 'NestJS es un framework para crear eficientes y escalables Aplicaciones web Node.js');
+agregarDescripcion(5, 'NET es una plataforma para desarrolladores gratuita, multiplataforma de código abierto.');
+agregarDescripcion(6, 'Next.js es un marco web de desarrollo front-end de React de código abierto creado por Vercel');
+agregarDescripcion(7, 'MySQL es un sistema de gestión de bases de datos relacional desarrollado bajo licencia');
+agregarDescripcion(8, 'MongoDB es un sistema de base de datos NoSQL, orientado a documentos y de código abierto.');
 
- */
+cargarHTML(tecnologias);
+
+
