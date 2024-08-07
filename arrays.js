@@ -89,8 +89,8 @@ resultado = tecnologias2.reduce((total, tecnologia) => total - tecnologia.precio
 
 
 const divContenedor = document.getElementById('contenedor');
-
-
+const Usuario = document.getElementById('nombre-usuario').innerText = "Damian Loquito";
+let btnFavorito = document.getElementById('btnFav');
 
 
 document.getElementById('Front').onclick = function () {
@@ -110,6 +110,14 @@ document.getElementById('Reset').onclick = function () {
     console.log('filtro de Reset');
     filtro('Reset')
 }
+document.getElementById('Favoritos').onclick = function () {
+    console.log('Filtro Favoritos!!');
+
+}
+/* document.getElementById('btnFav').onclick = function(){
+    console.log("Click de agregar a favoritos");
+    
+} */
 
 cargarHTML(tecnologias);
 let flagFiltro = '';
@@ -125,13 +133,16 @@ function cargarHTML(array) {
         <div class="card-body d-flex flex-column">
           <h5 class="card-title text-decoration-underline">${item.framework}</h5>
           <p class="card-text text-bg-warning">${item.stack}</p>
-          <p class="card-text text-start ">${item.description}</p>
+          <p class="card-text ">${item.description}</p>
+          <button id="btnFav" class="card-text" > Agregar a favorito</button>
         </div>
       </div>
         `;
         divContenedor.appendChild(div);
     })
 }
+console.log(btnFavorito);
+
 
 
 //filtro
