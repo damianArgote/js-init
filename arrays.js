@@ -1,9 +1,9 @@
-//Arrays declaraciones y metodos
-const numeros = [1, 50, 10, 4, 100, 2000]
-const booleanos = [true, false, false, true]
-const arrayVariado = [12, false, 'hola mundo', { mensaje: 'esto es un mensaje' }];
-//Mas comunes
-const meses = ['Enero', 'Febrero', 'Marzo', 'Abril']
+//variables
+const divContenedor = document.getElementById('contenedor');
+const Usuario = document.getElementById('nombre-usuario').innerText = "Damian Loquito";
+const btnFavorito = document.getElementById('btnFav');
+
+const btnAgregar = document.querySelector(".btnAgregar");
 const tecnologias = [
     {
         framework: 'React',
@@ -54,74 +54,43 @@ const tecnologias = [
         id: 8
     }
 ]
-
-const tecnologias2 = [
-    {
-        framework: 'React',
-        stack: 'Frontend',
-        logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMbJS-A8NEllfqbKf-4GUKetJe8J3GKqKP6A&s',
-        id: 1,
-        precio: 20000
-    },
-    {
-        framework: 'Angular',
-        stack: 'Frontend',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/1200px-Angular_full_color_logo.svg.png',
-        id: 2,
-        precio: 30000
-    },
-]
-
-
-let frontend = tecnologias.map((tecnologia) => {
-    if (tecnologia.stack === 'Reset') {
-        return tecnologia;
-    }
-    return;
-});
-
-let resultado;
-
-
-
-resultado = tecnologias2.reduce((total, tecnologia) => total - tecnologia.precio, 0);
-
-
-
-const divContenedor = document.getElementById('contenedor');
-const Usuario = document.getElementById('nombre-usuario').innerText = "Damian Loquito";
-let btnFavorito = document.getElementById('btnFav');
-
-
-document.getElementById('Front').onclick = function () {
-    console.log('filtro de front');
-
-    filtro('Frontend')
-}
-document.getElementById('Back').onclick = function () {
-    console.log('filtro de backend');
-    filtro('Backend')
-}
-document.getElementById('Data').onclick = function () {
-    console.log('filtro de database');
-    filtro('Database')
-}
-document.getElementById('Reset').onclick = function () {
-    console.log('filtro de Reset');
-    filtro('Reset')
-}
-document.getElementById('Favoritos').onclick = function () {
-    console.log('Filtro Favoritos!!');
-
-}
-/* document.getElementById('btnFav').onclick = function(){
-    console.log("Click de agregar a favoritos");
-    
-} */
-
-cargarHTML(tecnologias);
 let flagFiltro = '';
+listeners()
+//listeners aca se registran todos los eventos
+function listeners(){
+    document.addEventListener("DOMContentLoaded", () => {
 
+        /* se agrega un evento click al divContendor
+            para obtener la info dinamica de todos los elementos
+            dentro del contenedor
+        */
+        divContenedor.addEventListener('click',agregarFavoritos)
+        //botones
+        document.getElementById('Front').onclick = function () {
+            console.log('filtro de front');
+        
+            filtro('Frontend')
+        }
+        document.getElementById('Back').onclick = function () {
+            console.log('filtro de backend');
+            filtro('Backend')
+        }
+        document.getElementById('Data').onclick = function () {
+            console.log('filtro de database');
+            filtro('Database')
+        }
+        document.getElementById('Reset').onclick = function () {
+            console.log('filtro de Reset');
+            filtro('Reset')
+        }
+        document.getElementById('Favoritos').onclick = function () {
+            console.log('Filtro Favoritos!!');
+        
+        }
+      });
+}
+
+//funcciones
 function cargarHTML(array) {
     limpiarHtml();
     array.map(item => {
@@ -134,16 +103,17 @@ function cargarHTML(array) {
           <h5 class="card-title text-decoration-underline">${item.framework}</h5>
           <p class="card-text text-bg-warning">${item.stack}</p>
           <p class="card-text ">${item.description}</p>
-          <button id="btnFav" class="card-text" > Agregar a favorito</button>
+          <button data-id="${item.id}"  class="btn btn-warning btnAgregar" > Agregar a favorito</button>
         </div>
       </div>
         `;
+        /* Al boton se agrega atributo personalizado data-id 
+        se le asigna el valor del item.id para que cada boton tenga ese unico valor
+        se agrega la clase btnAgregar para que el evento click del contenedor
+        se ejecute solo en el boton y no en cualquier lado */
         divContenedor.appendChild(div);
     })
 }
-console.log(btnFavorito);
-
-
 
 //filtro
 function filtro(stack) {
@@ -163,6 +133,18 @@ function limpiarHtml() {
     }
 }
 
+
+function agregarFavoritos(e){
+    e.preventDefault();
+    /* Se valida que el console.log se ejecute solo cuando
+    el elemento tenga la clase btnAgregar */
+    if(e.target.classList.contains('btnAgregar'))
+    console.log(e.target.getAttribute('data-id'));
+    /* En consola se buentra el id de la tecnologia como STRING
+        Hasta aca la ayuda, continua con la funcion agregar al favoritos
+    */
+}
+
 //una funcion para agregar una descripcion a cada tecnologia
 function agregarDescripcion(id, descripcion) {
     const tecnologia = tecnologias.find(item => item.id === id);
@@ -170,6 +152,9 @@ function agregarDescripcion(id, descripcion) {
         tecnologia.description = descripcion;
     }
 }
+
+//calls
+cargarHTML(tecnologias);
 agregarDescripcion(1, 'React es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario.');
 agregarDescripcion(2, 'Angular es un framework para aplicaciones web desarrollado en TypeScript');
 agregarDescripcion(3, 'Node.js es un entorno en tiempo de ejecución multiplataforma');
@@ -179,6 +164,5 @@ agregarDescripcion(6, 'Next.js es un marco web de desarrollo front-end de React 
 agregarDescripcion(7, 'MySQL es un sistema de gestión de bases de datos relacional desarrollado bajo licencia');
 agregarDescripcion(8, 'MongoDB es un sistema de base de datos NoSQL, orientado a documentos y de código abierto.');
 
-cargarHTML(tecnologias);
 
 
