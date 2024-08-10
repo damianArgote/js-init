@@ -56,19 +56,20 @@ const tecnologias = [
 ]
 let flagFiltro = '';
 listeners()
+
 //listeners aca se registran todos los eventos
-function listeners(){
+function listeners() {
     document.addEventListener("DOMContentLoaded", () => {
 
         /* se agrega un evento click al divContendor
             para obtener la info dinamica de todos los elementos
             dentro del contenedor
         */
-        divContenedor.addEventListener('click',agregarFavoritos)
+        divContenedor.addEventListener('click', agregarFavoritos)
         //botones
         document.getElementById('Front').onclick = function () {
             console.log('filtro de front');
-        
+
             filtro('Frontend')
         }
         document.getElementById('Back').onclick = function () {
@@ -85,9 +86,10 @@ function listeners(){
         }
         document.getElementById('Favoritos').onclick = function () {
             console.log('Filtro Favoritos!!');
-        
+
         }
-      });
+
+    });
 }
 
 //funcciones
@@ -134,15 +136,18 @@ function limpiarHtml() {
 }
 
 
-function agregarFavoritos(e){
+function agregarFavoritos(e) {
     e.preventDefault();
-    /* Se valida que el console.log se ejecute solo cuando
-    el elemento tenga la clase btnAgregar */
-    if(e.target.classList.contains('btnAgregar'))
-    console.log(e.target.getAttribute('data-id'));
-    /* En consola se buentra el id de la tecnologia como STRING
-        Hasta aca la ayuda, continua con la funcion agregar al favoritos
-    */
+    if (e.target.classList.contains('btnAgregar')) {
+        const id = parseInt(e.target.getAttribute('data-id'));
+        const tecnologiaSeleccionada = tecnologias.find(item => item.id === id);
+
+        if (tecnologiaSeleccionada) {
+            console.log('Tecnología seleccionada:', tecnologiaSeleccionada.framework);
+        } else {
+            console.log('Tecnología no encontrada');
+        }
+    }
 }
 
 //una funcion para agregar una descripcion a cada tecnologia
@@ -150,6 +155,7 @@ function agregarDescripcion(id, descripcion) {
     const tecnologia = tecnologias.find(item => item.id === id);
     if (tecnologia) {
         tecnologia.description = descripcion;
+        cargarHTML(tecnologias);  // agregado esto al if porque sino no cargaba las descripciones al re-cargar la pagina
     }
 }
 
