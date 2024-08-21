@@ -2,8 +2,8 @@
 const divContenedor = document.getElementById('contenedor');
 const Usuario = document.getElementById('nombre-usuario').innerText = "Damian Loquito";
 const btnFavorito = document.getElementById('btnFav');
-const listaFavoritos = []
-
+let listaFavoritos = []
+const favoritos = document.getElementById('favoritos');
 
 const btnAgregar = document.querySelector(".btnAgregar");
 const tecnologias = [
@@ -69,6 +69,7 @@ function listeners() {
         document.getElementById('Data').onclick = () => filtro('Database');
         document.getElementById('Reset').onclick = () => filtro('Reset');
         document.getElementById('Favoritos').onclick = mostrarFavoritos; // Mostrar la lista de favoritos
+        favoritos.addEventListener('click',eliminarFavorito)
     });
 }
 
@@ -109,49 +110,50 @@ function limpiarHtml() {
     }
 }
 
+function limpiarHtmlTable() {
+    while (favoritos.firstChild) {
+        favoritos.removeChild(favoritos.firstChild);
+    }
+}
+
 function agregarFavoritos(e) {
     e.preventDefault();
     if (e.target.classList.contains('btnAgregar')) {
         const id = parseInt(e.target.getAttribute('data-id'));
         const tecnologiaSeleccionada = tecnologias.find(item => item.id === id);
-
         if (tecnologiaSeleccionada) {
             if (!listaFavoritos.includes(tecnologiaSeleccionada)) {
                 listaFavoritos.push(tecnologiaSeleccionada);
                 e.target.disabled = true; // Deshabilitar el boton de favoritos
-                console.log('Tecnología agregada a favoritos:', tecnologiaSeleccionada.framework);
+                mostrarFavoritos()
             }
-        } else {
-            console.log('Tecnología no encontrada');
         }
     }
 }
 
 function mostrarFavoritos() {
-    limpiarHtml();
-    if (listaFavoritos.length === 0) {
-        const div = document.createElement('div');
-        div.classList.add('col-12', 'text-light');
-        div.innerHTML = '<p class="text-center">No hay favoritos</p>';
-        divContenedor.appendChild(div);
-        return;
+    limpiarHtmlTable();
+    if (listaFavoritos.length === 0){
+        const row = document.createElement('tr');
+        row.innerHTML=`
+        <td colspan="4" class="table-active">No hay Favoritos</td>
+        `
+        favoritos.appendChild(row);
+        return
     }
-
     listaFavoritos.map(item => {
-        const div = document.createElement('div');
-        div.classList.add('col-6', 'col-sm-6', 'col-md-4', 'col-lg-3', 'text-light', 'rounded', 'd-flex', 'p-1', 'img-fluid');
-        div.innerHTML = `
-        <div class="card border border-danger h-10 p-5 text-center img-fluid ">
-        <img src="${item.logo}" class="card-img-top img-thumbnail img-fluid border-5" alt="${item.framework}">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title text-decoration-underline">${item.framework}</h5>
-          <p class="card-text text-bg-warning">${item.stack}</p>
-          <p class="card-text ">${item.description}</p>
-          <button data-id="${item.id}"  class="btn btn-danger btnQuitar"> Quitar de favoritos</button>
-        </div>
-      </div>
+        const row = document.createElement('tr');
+
+        row.innerHTML=`
+        <td>${item.id}</td>
+        <td>${item.framework}</td>
+        <td>${item.stack}</td>
+        <td>
+            <span data-id="${item.id}" class="badge eliminarBtn text-bg-danger">X</span>
+        </td>
         `;
-        divContenedor.appendChild(div);
+
+        favoritos.appendChild(row);
     });
 
     // Agregar evento para quitar de favoritos
@@ -175,6 +177,15 @@ function agregarDescripcion(id, descripcion) {
     if (tecnologia) {
         tecnologia.description = descripcion;
         cargarHTML(tecnologias);
+    }
+}
+
+function eliminarFavorito(e){
+    e.preventDefault()
+    if (e.target.classList.contains('eliminarBtn')){
+        let id = parseInt(e.target.getAttribute('data-id'));
+        listaFavoritos = listaFavoritos.filter( tecnologia => tecnologia.id !== id);
+        mostrarFavoritos()
     }
 }
 

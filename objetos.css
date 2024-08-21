@@ -52,3 +52,7 @@ body {
 .text-danger {
   color: #dc3545;
 }
+
+.eliminarBtn{
+  cursor: pointer;
+}
